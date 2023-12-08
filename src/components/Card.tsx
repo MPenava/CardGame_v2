@@ -6,7 +6,7 @@ interface Player {
 
 interface CardProps{
     activePlayer: Player | null,
-    onSelectPlayer: React.Dispatch<React.SetStateAction<Player>>
+    onSelectPlayer: any,
     player: Player,
     realName: string,
     playerName: string,
@@ -24,9 +24,7 @@ const Card = ({
   return (
     <article
       onClick={() => {
-        onSelectPlayer({
-          ...player,
-        });
+        onSelectPlayer({...player});
       }}
       className="p-6 m-2 hover:bg-gray-500 border-2 border-solid border-white dark:border-gray-700 dark:hover:bg-gray-700 cursor-pointer"
       style={{

@@ -89,9 +89,10 @@ function App() {
   }
 
   //Function for selecting active player
-  function handleSelectedPlayer(selectedPlayer: Player) {
+  function handleSelectedPlayer(player: Player) {
     console.log("Selecting new active player...");
-    setSelectedPlayer(selectedPlayer);
+    console.log(player);
+    setSelectedPlayer(player);
   }
 
   //Function for sending data of active player
