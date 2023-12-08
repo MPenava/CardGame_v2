@@ -6,7 +6,7 @@ interface Player {
 
 interface CardProps{
     activePlayer: Player | null,
-    onSelectPlayer: any,
+    onSelectPlayer: (i: Player) => void,
     player: Player,
     realName: string,
     playerName: string,
