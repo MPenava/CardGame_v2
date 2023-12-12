@@ -1,14 +1,7 @@
-interface Player {
-    asset: string;
-    playerName: string;
-    realName: string;
-}
+import usePlayers from "../hooks/usePlayers"
   
-type DetailsProp = {
-    activePlayer: Player | null
-}
-
-const Details = ({activePlayer}: DetailsProp) =>{
+const Details = () =>{
+  const { activePlayer } = usePlayers() 
   return (
     <section className="border-2 border-solid border-white basis-3/5 mt-5 pb-2">
       <h1 className="text-4xl text-white ml-3 mt-2">Details</h1>

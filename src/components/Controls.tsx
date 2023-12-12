@@ -1,19 +1,38 @@
-import { MouseEvent} from "react";
+import usePlayers from "../hooks/usePlayers";
 
-interface Player {
-  asset: string;
-  playerName: string;
-  realName: string;
-}
 
-type ControlsProps = {
-    onSortAsc: (event: React.MouseEvent<HTMLButtonElement>) => void,
-    onSortDesc: (event: React.MouseEvent<HTMLButtonElement>) => void,
-    onSendData: (event: React.MouseEvent<HTMLButtonElement>) => void,
-    selectedPlayer: Player | null
-}
+const Controls = () => {
+  const { dispatch, REDUCER_ACTIONS, activePlayer } = usePlayers();
 
-const Controls = ({ onSortAsc, onSortDesc, onSendData, selectedPlayer }: ControlsProps) => {
+  const onSortAsc = () => {
+    dispatch({ type: REDUCER_ACTIONS.SORT_ASC });
+  };
+
+  const onSortDesc = () => {
+    dispatch({ type: REDUCER_ACTIONS.SORT_DESC });
+  };
+
+  const onSendData = () => {
+    if (activePlayer !== null) {
+      console.log("Sending data of active player...");
+
+      fetch("http://localhost:3000/players", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(activePlayer),
+      })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    
+  };
+
   return (
     <section className="border-2 border-solid border-white basis-2/5 mt-5">
       <h1 className="text-4xl text-white ml-3 mt-2">Controls</h1>
@@ -34,14 +53,16 @@ const Controls = ({ onSortAsc, onSortDesc, onSendData, selectedPlayer }: Control
       <article className="my-8 ml-5 mr-5">
         <button
           onClick={onSendData}
-          disabled={selectedPlayer === null}
-          className={`w-full text-lg uppercase text-white text-center py-1 border-2 border-thin border-white ${selectedPlayer !== null?'hover:bg-gray-500':''}`}
+          disabled={activePlayer === null}
+          className={`w-full text-lg uppercase text-white text-center py-1 border-2 border-thin border-white ${
+            activePlayer !== null ? "hover:bg-gray-500" : ""
+          }`}
         >
           Submit
         </button>
       </article>
     </section>
   );
-}
+};
 
 export default Controls;
