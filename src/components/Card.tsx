@@ -1,32 +1,20 @@
-import { PlayerType } from "../context/PlayersProvider";
-import { ReducerAction } from "../context/PlayersProvider";
-import { ReducerActionType } from "../context/PlayersProvider";
+import { PlayerType } from "../store";
+import { usePlayerStore } from "../store";
 
 interface CardProps {
   player: PlayerType;
-  dispatch: React.Dispatch<ReducerAction>;
-  REDUCER_ACTIONS: ReducerActionType;
   activePlayer: PlayerType | null;
 }
 
 const Card = ({
   player,
-  dispatch,
-  REDUCER_ACTIONS,
   activePlayer,
 }: CardProps) => {
-  
-  const onSelectPlayer = () => {
-    console.log("Selecting player...");
-    dispatch({
-      type: REDUCER_ACTIONS.SET_ACTIVE_PLAYER,
-      payload: player,
-    });
-  };
+  const selectActivePlayer = usePlayerStore((state) => state.selectActivePlayer)
 
   return (
     <article
-      onClick={onSelectPlayer}
+      onClick={() => {selectActivePlayer(player)}}
       className="p-6 m-2 hover:bg-gray-500 border-2 border-solid border-white dark:border-gray-700 dark:hover:bg-gray-700 cursor-pointer"
       style={{
         backgroundColor:

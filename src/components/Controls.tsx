@@ -1,37 +1,10 @@
-import usePlayers from "../hooks/usePlayers";
-
+import { usePlayerStore } from "../store";
 
 const Controls = () => {
-  const { dispatch, REDUCER_ACTIONS, activePlayer } = usePlayers();
-
-  const onSortAsc = () => {
-    dispatch({ type: REDUCER_ACTIONS.SORT_ASC });
-  };
-
-  const onSortDesc = () => {
-    dispatch({ type: REDUCER_ACTIONS.SORT_DESC });
-  };
-
-  const onSendData = () => {
-    if (activePlayer !== null) {
-      console.log("Sending data of active player...");
-
-      fetch("http://localhost:3000/players", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(activePlayer),
-      })
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-    
-  };
+  const activePlayer = usePlayerStore((state) => state.activePlayer)
+  const onSortAsc = usePlayerStore((state) => state.sortAscOrder)
+  const onSortDesc = usePlayerStore((state) => state.sortDescOrder)
+  // const onSendData = usePlayerStore((state) => state.sendData)
 
   return (
     <section className="border-2 border-solid border-white basis-2/5 mt-5">
@@ -52,7 +25,7 @@ const Controls = () => {
       </article>
       <article className="my-8 ml-5 mr-5">
         <button
-          onClick={onSendData}
+          // onClick={onSendData}
           disabled={activePlayer === null}
           className={`w-full text-lg uppercase text-white text-center py-1 border-2 border-thin border-white ${
             activePlayer !== null ? "hover:bg-gray-500" : ""

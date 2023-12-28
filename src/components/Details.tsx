@@ -1,7 +1,7 @@
-import usePlayers from "../hooks/usePlayers"
+import { usePlayerStore } from "../store";
   
 const Details = () =>{
-  const { activePlayer } = usePlayers() 
+  const activePlayer = usePlayerStore((state) => state.activePlayer) 
   return (
     <section className="border-2 border-solid border-white basis-3/5 mt-5 pb-2">
       <h1 className="text-4xl text-white ml-3 mt-2">Details</h1>
